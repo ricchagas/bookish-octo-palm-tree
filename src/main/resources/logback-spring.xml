@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+ 
+    <appender name="Console"
+        class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+            	%d{yyyy-MM-dd HH:mm:ss.SSS} %thread correlationId:%X{correlationId} [%-5level] %class{0} - %msg%n
+            </Pattern>
+        </layout>
+        <!-- >encoder class="net.logstash.logback.encoder.LogstashEncoder" /-->
+        <encoder>
+      			<pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} %thread correlationId:%X{REQUEST_ID} [%-5level] %class{0} - %msg%n</pattern>
+    	</encoder>
+    </appender>
+         
+    <!-- LOG everything at INFO level -->
+    <root level="info">
+        <appender-ref ref="Console" />
+    </root>
+ 
+    <!-- LOG "br.com.clarobr*" at TRACE level -->
+    <logger name="br.com.spread.xpto" level="trace" additivity="false">
+        <appender-ref ref="Console" />
+    </logger>
+ 
+</configuration>
