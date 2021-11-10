@@ -1,9 +1,15 @@
 package br.com.spread.xpto.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import java.util.List;
+import java.util.Optional;
 
-import br.com.spread.xpto.model.ClienteModel;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Component;
+import org.springframework.web.server.ResponseStatusException;
+
+import br.com.spread.xpto.model.ClienteEntity;
+import br.com.spread.xpto.repository.ClienteRepository;
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -11,12 +17,33 @@ import lombok.extern.slf4j.Slf4j;
 public class ClienteService {
 	@Autowired
 	EnderecoService service;
-	
-	public ClienteModel findById (Long id)
-	{
-		var cli1 = ClienteModel.builder().cpf("10").nome("Alan").id(id).build();		
-		cli1.setEndereco(service.findById(10L));
-		log.info("Cliente Retornado {}", cli1);
-		return cli1;
+
+	@Autowired
+	ClienteRepository clienteRepository;
+
+	public ClienteEntity findById(Long id)  {
+		
+		log.info("Buscando o cliente com id {}", id);
+		var cliente = clienteRepository.findById(id);
+		return checkReturnOrThrowException(id, cliente);
 	}
+
+	public List<ClienteEntity> fetchAll() {
+		
+		return clienteRepository.findAll();
+		
+	}
+	
+	public ClienteEntity fetchByName(String name) {
+		log.info("Buscando o cliente com nome {}", name);
+		var cliente = clienteRepository.findByNome(name);
+		
+		return checkReturnOrThrowException(name, cliente);
+	}	
+	
+	private ClienteEntity checkReturnOrThrowException(Object id, Optional<ClienteEntity> cliente) {
+		log.info("cliente retornado {}", cliente);	
+		return cliente.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("O Cliente %s nao foi encontrado ",id)));
+	}
+
 }
