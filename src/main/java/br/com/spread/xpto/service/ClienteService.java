@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-
+import br.com.spread.xpto.exception.XptoNotfoundException;
 import br.com.spread.xpto.model.ClienteEntity;
 import br.com.spread.xpto.repository.ClienteRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -43,7 +43,7 @@ public class ClienteService {
 	
 	private ClienteEntity checkReturnOrThrowException(Object id, Optional<ClienteEntity> cliente) {
 		log.info("cliente retornado {}", cliente);	
-		return cliente.orElseThrow(()-> new ResponseStatusException(HttpStatus.NOT_FOUND, String.format("O Cliente %s nao foi encontrado ",id)));
+		return cliente.orElseThrow(()-> new  XptoNotfoundException("O Cliente nao foi encontrado"));
 	}
 
 }
