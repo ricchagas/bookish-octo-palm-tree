@@ -1,6 +1,8 @@
 package br.com.spread.xpto.resource;
 
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import br.com.spread.xpto.dto.AddressDTO;
 import br.com.spread.xpto.model.EnderecoEntity;
 import br.com.spread.xpto.service.EnderecoService;
 
@@ -34,5 +37,14 @@ public class EnderecoResource {
 		return ResponseEntity.ok().body(enderecoService.findByCep(cep));
 	}	
 	
+	@GetMapping(value = "/address", consumes= { MediaType.APPLICATION_JSON_VALUE}, produces=  { MediaType.APPLICATION_JSON_VALUE} )
+	public ResponseEntity<List<AddressDTO>> fetchAllAdress () 	{
+		return ResponseEntity.ok().body(enderecoService.fetchAllAddress());
+	}
+	
+	@GetMapping(value = "/address/{countryId}", consumes= { MediaType.APPLICATION_JSON_VALUE}, produces=  { MediaType.APPLICATION_JSON_VALUE} )
+	public ResponseEntity<List<AddressDTO>> fetchByContryId (@PathVariable("countryId") String countryId ) 	{
+		return ResponseEntity.ok().body(enderecoService.fetchByContryId(countryId));
+	}
 	
 }
