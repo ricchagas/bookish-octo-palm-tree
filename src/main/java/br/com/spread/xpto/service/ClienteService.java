@@ -41,6 +41,12 @@ public class ClienteService {
 		return checkReturnOrThrowException(name, cliente);
 	}	
 	
+	public ClienteEntity fetchByCpf(String cpf) {
+		log.info("Buscando o cliente com cpf {}", cpf);
+		var cliente = clienteRepository.findByCpf(cpf);
+		return checkReturnOrThrowException(cpf, cliente);
+	}	
+	
 	private ClienteEntity checkReturnOrThrowException(Object id, Optional<ClienteEntity> cliente) {
 		log.info("cliente retornado {}", cliente);	
 		return cliente.orElseThrow(()-> new  XptoNotfoundException("O Cliente nao foi encontrado"));
