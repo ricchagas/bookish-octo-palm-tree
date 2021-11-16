@@ -2,6 +2,7 @@ package br.com.spread.xpto.exception;
 
 import java.io.Serializable;
 import java.time.Instant;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

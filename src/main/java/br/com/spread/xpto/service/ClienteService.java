@@ -4,9 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
-import org.springframework.web.server.ResponseStatusException;
+
 import br.com.spread.xpto.exception.XptoNotfoundException;
 import br.com.spread.xpto.model.ClienteEntity;
 import br.com.spread.xpto.repository.ClienteRepository;
